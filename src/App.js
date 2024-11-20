@@ -4,6 +4,7 @@ import Content from './Content'
 import AddItem from './AddItem'
 import SearchItem from './SearchItem'
 import apiRequest from './apiRequest'
+import Practice from './Practice'
 import { useState, useEffect } from "react"
 
 function App() {
@@ -99,6 +100,7 @@ const handleSubmit = (e) => {
   return (
     <div className="App">
       <Header title='Grocery List' />
+      <Practice/>
       <AddItem 
         newItem={newItem}
         setNewItem={setNewItem}
