@@ -8,13 +8,70 @@ import { useState, useEffect } from "react"
 
 function App() {
 
+  const CHALANGE_API_URL = 'https://jsonplaceholder.typicode.com/'
   const API_URL = 'http://localhost:3500/items';
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
   const [search, setSearch] = useState('');
   const [fetchError, setFetchError] = useState(null);
   const [ isLoading, setIsLoading ] = useState(true);
+  const [ users, setUsers ] = useState([]);
+  const [ comments, setComments ] = useState([]);
+  const [ posts, setPosts ] = useState([]);
+  
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch(CHALANGE_API_URL+'users')
+        if (!response.ok) throw Error('Did not recieve expected data')
+          const listUsers = await response.json();
+          setUsers(listUsers);
+      } catch (err) {
+        setFetchError(err.message)
+      } finally {
+        setIsLoading(false)
+      }
+    };
+    setTimeout(() => {
+      (async () => await fetchUsers())();
+    }, 2000)
+  }, []);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch(CHALANGE_API_URL+'posts')
+        const listPosts = response.json()
+        setPosts(listPosts)
+      } catch (err) {
+        setFetchError(err.message)
+      } finally {
+        setIsLoading(false)
+      }
+    };
+    setTimeout(() => {
+      (async () => await fetchPosts())();
+    }, 2000)
+  }, []);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(CHALANGE_API_URL+'comments')
+        const listComments = response.json()
+        setComments(listComments)
+      } catch (err) {
+        setFetchError(err.message)
+      } finally {
+        setIsLoading(false)
+      }
+    };
+    setTimeout(() => {
+      (async () => await fetchComments())();
+    }, 2000)
+  }, []);
+  
   useEffect(() => {
     const fetchItems = async () => {
       try {
