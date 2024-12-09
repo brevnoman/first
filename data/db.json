@@ -11,19 +11,24 @@
       "item": "Pizza"
     },
     {
-      "id": 3,
+      "id": "3",
       "checked": false,
       "item": "Drap"
     },
     {
-      "id": 4,
+      "id": "4",
       "checked": false,
       "item": "Shmal"
     },
     {
-      "id": 5,
+      "id": "5",
       "checked": false,
       "item": "Dubas"
+    },
+    {
+      "id": 6,
+      "checked": false,
+      "item": "BigButtyMama"
     }
   ]
 }

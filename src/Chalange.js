@@ -1,25 +1,14 @@
-const Chalange = ({ color, setColor }) => {
+import LineItem from "./LineItem"
+const Chalange = ({ items }) => {
     return (
-        <form onSubmit={(e) => e.preventDefault()}>
-            {color ? (
-                    <section 
-                        className="square"
-                        style={{ backgroundColor: color }}
-                    >
-                        <h2>{color ? color : "Empty Value"}</h2>
-                    </section>
-                ) : (
-                    <label style= {{ backgroundColor: 'black' }}>
-                        black
-                    </label>
-                )
-            }
-            <p></p>
-            <input
-                onChange={(e) => setColor(e.target.value)}
-            />
-        </form>
-        
+        <ul>
+            {items && items.map((item) => (
+                    < LineItem
+                        key={item.id}
+                        item={item}
+                    />     
+            ))}
+        </ul>
     )
 }
 

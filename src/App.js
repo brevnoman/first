@@ -4,94 +4,44 @@ import Content from './Content'
 import AddItem from './AddItem'
 import SearchItem from './SearchItem'
 import apiRequest from './apiRequest'
+import Chalange from './Chalange'
 import { useState, useEffect } from "react"
+import Button from './Button'
 
 function App() {
-
-  const CHALANGE_API_URL = 'https://jsonplaceholder.typicode.com/'
+  const [ pageContent, setPageContent ] = useState('');
+  const CHALANGE_API_URL = 'https://jsonplaceholder.typicode.com/';
   const API_URL = 'http://localhost:3500/items';
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
   const [search, setSearch] = useState('');
   const [fetchError, setFetchError] = useState(null);
   const [ isLoading, setIsLoading ] = useState(true);
-  const [ users, setUsers ] = useState([]);
-  const [ comments, setComments ] = useState([]);
-  const [ posts, setPosts ] = useState([]);
-  
+  const [ reqType, setReqType ] = useState('users');
+  console.log(items)
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(CHALANGE_API_URL+'users')
-        if (!response.ok) throw Error('Did not recieve expected data')
-          const listUsers = await response.json();
-          setUsers(listUsers);
-      } catch (err) {
-        setFetchError(err.message)
-      } finally {
-        setIsLoading(false)
-      }
-    };
-    setTimeout(() => {
-      (async () => await fetchUsers())();
-    }, 2000)
-  }, []);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await fetch(CHALANGE_API_URL+'posts')
-        const listPosts = response.json()
-        setPosts(listPosts)
-      } catch (err) {
-        setFetchError(err.message)
-      } finally {
-        setIsLoading(false)
-      }
-    };
-    setTimeout(() => {
-      (async () => await fetchPosts())();
-    }, 2000)
-  }, []);
+  const handleContentChange = (newContent) => {
+    setPageContent(newContent)
+  }
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await fetch(CHALANGE_API_URL+'comments')
-        const listComments = response.json()
-        setComments(listComments)
-      } catch (err) {
-        setFetchError(err.message)
-      } finally {
-        setIsLoading(false)
-      }
-    };
-    setTimeout(() => {
-      (async () => await fetchComments())();
-    }, 2000)
-  }, []);
-  
   useEffect(() => {
     const fetchItems = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) throw Error('Did not recieve expected data')
-        const listItems = await response.json();
-        setItems(listItems);
-        setFetchError(null);
-      } catch (err) {
-        setFetchError(err.message)
-      } finally {
-        setIsLoading(false)
-      }
+        try {
+          const response = await fetch(`${CHALANGE_API_URL}${reqType}`)
+          const listItems = await response.json()
+          setItems(listItems)
+        } catch (err) {
+          setFetchError(err.message)
+        } finally {
+          setIsLoading(false)
+        }
     };
-    setTimeout(() => {
-        (async () => await fetchItems())();
-      }, 2000)
+    
+    fetchItems();
+  }, [reqType]);
 
-  }, []);
-
+  console.log(items)
 
   const addItem = async (item) => {
     const id = items.length ? Number(items[items.length -1].id) + Number(1) : Number(1);
@@ -156,7 +106,7 @@ const handleSubmit = (e) => {
   return (
     <div className="App">
       <Header title='Grocery List' />
-      <AddItem 
+      {/* <AddItem 
         newItem={newItem}
         setNewItem={setNewItem}
         handleSubmit={handleSubmit}
@@ -164,16 +114,38 @@ const handleSubmit = (e) => {
       <SearchItem
         search={search}
         setSearch={setSearch}
+      /> */}
+      
+
+
+      <Button
+        buttonText='users'
+        reqType={reqType}
+        setReqType={setReqType}
       />
-      <main>
+      <Button
+        buttonText='posts'
+        reqType={reqType}
+        setReqType={setReqType}
+      />
+      <Button
+        buttonText='comments'
+        reqType={reqType}
+        setReqType={setReqType}
+      />
+      <Chalange
+        items={items}
+      />
+      
+      {/* <main>
         {isLoading && <p>loading items...</p>}
         {fetchError && <p style={{ color: "red" }}>{`Error: ${fetchError}`}</p>}
-        {!fetchError && !isLoading && <Content
+        {!fetchError && !isLoading && items &&<Content
           items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
           handleCheck={handleCheck}
           handleDelete={handleDelete}
         />}
-      </main>
+      </main> */}
       <Footer
         length={items.leng}
       />
