@@ -6,6 +6,7 @@ import SearchItem from './SearchItem'
 import apiRequest from './apiRequest'
 import Chalange from './Chalange'
 import { useState, useEffect } from "react"
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Button from './Button'
 
 function App() {
