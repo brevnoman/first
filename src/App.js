@@ -138,6 +138,22 @@ const handleSubmit = (e) => {
       <Chalange
         items={items}
       />
+
+      <Button
+        buttonText='users'
+        reqType={reqType}
+        setReqType={setReqType}
+      />
+      <Button
+        buttonText='posts'
+        reqType={reqType}
+        setReqType={setReqType}
+      />
+      <Button
+        buttonText='comments'
+        reqType={reqType}
+        setReqType={setReqType}
+      />
       
       {/* <main>
         {isLoading && <p>loading items...</p>}
